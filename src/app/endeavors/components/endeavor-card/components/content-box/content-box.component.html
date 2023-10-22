@@ -1,0 +1,37 @@
+<div
+
+
+  [ngClass]="{
+  'opacity-20': newContent === '' || content === null || content === undefined,
+}"
+>
+  <ion-card-header *ngIf="newContent" class="p-3 pb-1 text-center">
+    <ion-card-title  class="endeavor-title-item">{{ title }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card
+  class="rounded-xl">
+    <ion-card-header *ngIf="!newContent" class="p-3 text-center">
+      <ion-card-title class="endeavor-title-item">{{ title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="isEditing || content">
+      <div>
+        <ion-text class="text-base whitespace-pre-line" *ngIf="!isEditing">
+          <p class="endeavor-text" style="font-size: 16px; line-height: 20px">
+            {{ content }}
+          </p>
+        </ion-text>
+
+        <ion-textarea
+          [autoGrow]="true"
+          (ionInput)="onChangeContent()"
+          (ionBlur)="onChangeContent()"
+          [(ngModel)]="newContent"
+          *ngIf="isEditing"
+          class="endeavor-text"
+        ></ion-textarea>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

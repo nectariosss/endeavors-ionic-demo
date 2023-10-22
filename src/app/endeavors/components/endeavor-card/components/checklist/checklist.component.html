@@ -1,0 +1,93 @@
+<div
+  [ngClass]="{
+  'opacity-20':( newItemTitle === undefined || newItemTitle === '') && list.length === 0,
+}"
+>
+  <ion-card-header *ngIf="!(list.length === 0)|| newItemTitle" class="p-3 pb-1 text-center">
+    <ion-card-title class="endeavor-title-item">{{ title }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card class="rounded-xl">
+    <ion-card-header *ngIf="list.length === 0 && !newItemTitle  " class="p-3 text-center">
+      <ion-card-title class="endeavor-title-item">{{ title }}</ion-card-title>
+    </ion-card-header>
+
+    <div>
+      <ion-card-content>
+        <ion-list *ngIf="!(list.length === 0) || isEditing " class="rounded-lg">
+          <ion-item *ngFor="let item of list; let i = index">
+            <div class="w-full">
+              <div
+                *ngIf="item.name"
+                class="flex items-center justify-between w-full"
+              >
+                <div class="flex items-center truncate">
+
+                  <ion-icon
+                  (click)="onCopyToClipboard(item.name)"
+                  class="  cursor-pointer flex-shrink-0" [name]="iconName"></ion-icon>
+
+                  <ion-label ngClass="cursor-pointer" *ngIf="!(clickedItemName === item.name)"
+                    [title]="item.name"
+                    (click)="onListItemClick(item.name)"
+                    class="ml-2"
+                    >{{ item.name }}</ion-label
+                  >
+
+                  <ion-text
+                  (click)="onListItemClick(item.name)"
+                  class="m-4" *ngIf="clickedItemName === item.name">
+                    <p class="endeavor-text whitespace-normal" style="font-size: 16px; line-height: 20px; font-weight: 700;">
+                      {{ item.name }}
+                    </p>
+                  </ion-text>
+                </div>
+
+                <div class="flex">
+                  <ion-icon
+                    class="flex-shrink-0 cursor-pointer z-10 pr-2"
+                    *ngIf="isEditing"
+                    (click)="onEditItem(i)"
+                    name="pencil-outline"
+                  ></ion-icon>
+                  <ion-icon
+                    class="flex-shrink-0 cursor-pointer z-10 pl-2"
+                    *ngIf="isEditing"
+                    (click)="OnDeleteItem(i)"
+                    size="small"
+                    name="close-circle-outline"
+                  ></ion-icon>
+                </div>
+              </div>
+            </div>
+          </ion-item>
+
+          <ion-item *ngIf="isEditing">
+            <div class="w-full">
+              <div class="flex items-center justify-between w-full">
+                <div class="flex items-center w-full truncate">
+                  <ion-icon class="flex-shrink-0" [name]="iconName"></ion-icon>
+
+                  <ion-textarea
+                    [autoGrow]="true"
+                    (ionBlur)="onAddItem()"
+                    [(ngModel)]="newItemTitle"
+                    class="ml-2 w-full"
+                  ></ion-textarea>
+                </div>
+              </div>
+            </div>
+          </ion-item>
+        </ion-list>
+
+        <ion-toast
+          position="top"
+          #toast
+          trigger="open-toast"
+          message=""
+          [duration]="5000"
+        ></ion-toast>
+      </ion-card-content>
+    </div>
+  </ion-card>
+</div>

@@ -1,0 +1,175 @@
+<div class="mb-10">
+  <ion-card class="endeavor-card">
+    <ion-card-header>
+      <ion-card-title
+        [ngClass]="{
+        'text-green-500': endeavor.isActive,
+        'text-purple-500': endeavor.isAmbient,
+      }"
+        *ngIf="!isEditing"
+        class="uppercase text-3xl font-extrabold text-center mb-6"
+        >{{ endeavor.name }}</ion-card-title
+      >
+
+      <div
+        *ngIf="isEditing"
+        class="text-3xl font-extrabold mb-6 text-center uppercase"
+      >
+        <ion-input [(ngModel)]="newTitle"></ion-input>
+      </div>
+    </ion-card-header>
+
+    <time-progression
+      *ngIf="endeavor.timeframe.hasTimeFrame"
+      [data]="endeavor.timeframe"
+    ></time-progression>
+
+    <div *ngIf="endeavor.score.hasScore" class="mb-4">
+      <ion-item>
+        <ion-label class="uppercase font-bold">Score</ion-label>
+        <ion-badge>{{ endeavor.score.upvotes }} </ion-badge>
+      </ion-item>
+    </div>
+
+    <div class="flex flex-wrap justify-center">
+      <app-status-toggle
+        [isEditing]="isEditing"
+        (buttonToggled)="isAttainableUpdatedHandler($event)"
+        [flag]="endeavor.isAttainable"
+        [messageForTrue]="'Attainable'"
+        [messageForFalse]="'Attainable'"
+      ></app-status-toggle>
+
+      <app-status-toggle
+        [isEditing]="isEditing"
+        [flag]="endeavor.isActive"
+        (buttonToggled)="isActiveUpdatedHandler($event)"
+        [messageForTrue]="'Active'"
+        [messageForFalse]="'Active'"
+      ></app-status-toggle>
+
+      <app-status-toggle
+        [isEditing]="isEditing"
+        (buttonToggled)="isAmbientUpdatedHandler($event)"
+        [flag]="endeavor.isAmbient"
+        [messageForTrue]="'Ambient'"
+        [messageForFalse]="'Ambient'"
+      ></app-status-toggle>
+    </div>
+
+    <ion-card-content class="p-0 px-2">
+      <content-box
+        [title]="'Abstract'"
+        [content]="endeavor.abstract"
+        [newContent]="endeavor.abstract"
+        [isEditing]="isEditing"
+        (contentUpdated)="abstractUpdatedHandler($event)"
+      ></content-box>
+
+      <content-box
+        [title]="'Instant Aim'"
+        [content]="endeavor.instantAim"
+        [newContent]="endeavor.instantAim"
+        [isEditing]="isEditing"
+        (contentUpdated)="instantAimUpdatedHandler($event)"
+      ></content-box>
+
+      <content-box
+        [title]="'Long Aim'"
+        [content]="endeavor.longAim"
+        [newContent]="endeavor.longAim"
+        [isEditing]="isEditing"
+        (contentUpdated)="longAimUpdatedHandler($event)"
+      ></content-box>
+
+      <checklist
+        (listUpdated)="directivesUpdatedHandler($event)"
+        [isEditing]="isEditing"
+        [list]="endeavor.directives"
+        [title]="'Directives'"
+        [iconName]="'locate-outline'"
+      ></checklist>
+
+      <checklist
+        (listUpdated)="tasksUpdatedHandler($event)"
+        [isEditing]="isEditing"
+        [list]="endeavor.tasks"
+        [title]="'Tasks'"
+        [iconName]="'ticket-outline'"
+      ></checklist>
+
+      <checklist
+        (listUpdated)="ideasUpdatedHandler($event)"
+        [isEditing]="isEditing"
+        [list]="endeavor.ideas"
+        [title]="'Ideas'"
+        [iconName]="'bulb-outline'"
+      ></checklist>
+
+      <checklist
+        (listUpdated)="problemsUpdatedHandler($event)"
+        [isEditing]="isEditing"
+        [list]="endeavor.problems"
+        [title]="'Problems'"
+        [iconName]="'alert-circle-outline'"
+      ></checklist>
+
+      <checklist
+        (listUpdated)="resourcesUpdatedHandler($event)"
+        [isEditing]="isEditing"
+        [list]="endeavor.resources"
+        [title]="'Resources'"
+        [iconName]="'book-outline'"
+      ></checklist>
+
+      <content-box
+        [title]="'Notes'"
+        [content]="endeavor.notes"
+        [newContent]="endeavor.notes"
+        [isEditing]="isEditing"
+        (contentUpdated)="notesUpdatedHandler($event)"
+      ></content-box>
+
+      <timeframe
+        [isEditing]="isEditing"
+        [startDate]="endeavor.timeframe.start"
+        [endDate]="endeavor.timeframe.end"
+        (timeframeUpdated)="timeframeUpdatedHandler($event)"
+        [timeframe]="endeavor.timeframe"
+      ></timeframe>
+
+      <audit
+        [isEditing]="isEditing"
+        (scoreUpdated)="hasScoreHandler($event)"
+        (upvotesAdjusted)="upvotesAdjustedHandler($event)"
+        [score]="endeavor.score"
+      >
+      </audit>
+
+      <div class="flex flex-col justify-center items-center">
+        <app-status-toggle
+          [isEditing]="isEditing"
+          (buttonToggled)="isArchivedHandler($event)"
+          [flag]="endeavor.archived"
+          [messageForTrue]="'Archived'"
+          [messageForFalse]="'Archived'"
+        ></app-status-toggle>
+
+        <app-status-toggle
+          [isEditing]="isEditing"
+          (buttonToggled)="isCompletedHandler($event)"
+          [flag]="endeavor.completed"
+          [messageForTrue]="'Completed'"
+          [messageForFalse]="'Completed'"
+        ></app-status-toggle>
+      </div>
+
+      <ion-toast position="top" #cardToast [duration]="2000"></ion-toast>
+      <ion-toast
+        position="bottom"
+        #checklistToast
+        [duration]="1000"
+      ></ion-toast>
+    </ion-card-content>
+  </ion-card>
+</div>

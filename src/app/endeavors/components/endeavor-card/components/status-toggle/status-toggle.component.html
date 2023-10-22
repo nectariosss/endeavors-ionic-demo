@@ -1,0 +1,8 @@
+  <div class="flex item-center cursor-pointer" (click)="onToggleButton()">
+    <div *ngIf="flag">
+      <ion-badge class="bg-gray-400 text-black uppercase p-2 rounded-3xl">{{messageForTrue}}</ion-badge>
+    </div>
+    <div *ngIf="!flag">
+      <ion-badge class="bg-gray-400 text-black opacity-30 uppercase p-2 rounded-3xl">{{messageForFalse}}</ion-badge>
+    </div>
+  </div>

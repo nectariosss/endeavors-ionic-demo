@@ -1,0 +1,20 @@
+steps to work and deploy on default (the one for personal use)
+
+comment out the InMemoryWebApiModule.forRoot(InMemoryDataService) in app module
+change the flags in config Service appropriately
+ionic build
+firebase deploy --project default
+
+
+steps to work deploy on production (the demo one)
+uncomment out the InMemoryWebApiModule.forRoot(InMemoryDataService) in app module
+change the flags in config Service appropriately
+ionic build
+firebase deploy --project production
+
+
+useful commands
+firebase use (to see the list of projects)
+firebase use --add (to add a new project)
+firebase use default (to switch to default project)
+firebase use production (to switch to demo project)

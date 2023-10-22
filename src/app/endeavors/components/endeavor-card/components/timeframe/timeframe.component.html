@@ -1,0 +1,66 @@
+<div>
+
+  <ion-card-header
+  (click)=" isEditing? onToggleTimeFrame() : null"
+  *ngIf="timeframe.hasTimeFrame" class="p-3 pb-1 text-center">
+    <ion-card-title class="endeavor-title-item">Timeframe</ion-card-title>
+  </ion-card-header>
+
+
+  <ion-card
+  class="rounded-xl"
+    [ngClass]="{
+      'opacity-20': !timeframe.hasTimeFrame
+    }"
+  >
+
+    <ion-card-header
+    (click)=" isEditing? onToggleTimeFrame() : null"
+    *ngIf="!timeframe.hasTimeFrame" class="p-3 text-center">
+      <ion-card-title class="endeavor-title-item">Timeframe</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="timeframe.hasTimeFrame">
+      <div>
+        <div
+          class="flex flex-col justify-center m-2"
+        >
+          <div class="flex flex-col items-center justify-center m-2">
+
+            <ion-text class="uppercase mb-2">Start</ion-text>
+
+
+
+            <ion-datetime-button [disabled]="!isEditing" datetime="datetime-start"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                (ionChange)="handleDateChangeForStart($event)"
+                  displayFormat="M/d/yy"
+                  [(ngModel)]="startDate"
+                  id="datetime-start"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </div>
+          <div class="flex flex-col items-center justify-center m-2">
+
+            <ion-text class="uppercase mb-2">End</ion-text>
+
+            <ion-datetime-button [disabled]="!isEditing" datetime="datetime-end"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                (ionChange)="handleDateChangeForEnd($event)"
+                  displayFormat="M/d/yy"
+                  [(ngModel)]="endDate"
+                  id="datetime-end"
+                ></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

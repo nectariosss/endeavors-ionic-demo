@@ -1,0 +1,41 @@
+ion-card-content {
+
+
+
+
+
+
+
+
+  @media (prefers-color-scheme: dark) {
+    ::part(native) {
+      /* your styles here */
+      background-color: #1C1C1D;
+    }
+  }
+
+
+  @media (prefers-color-scheme: light) {
+
+    ion-list {
+      background-color: rgb(231, 231, 231);
+
+    }
+
+
+    ::part(native) {
+      background-color: rgb(231, 231, 231);
+    }
+  }
+
+
+
+
+
+
+  @apply
+  p-0
+
+
+
+}

@@ -1,0 +1,20 @@
+.endeavor-card {
+  max-width: 500px;
+  margin: auto;
+  box-shadow: inset 0px 0px 100px 90px rgba(115, 115, 115, 0.05);
+  border-radius: 0px !important;
+  @apply bg-black;
+}
+
+ion-card-header {
+  @apply pt-6
+  pb-0;
+}
+
+.emerald-shadow {
+  box-shadow: inset 0px 0px 10000px 130px rgba(0, 255, 76, 0.25);
+}
+
+.indigo-shadow {
+  box-shadow: inset 0px 0px 10000px 130px rgba(76, 0, 130, 0.502);
+}/*# sourceMappingURL=endeavor-card.component.css.map */

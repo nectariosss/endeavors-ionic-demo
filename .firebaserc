@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "endeavors-31681",
+    "production": "endeavors-prod"
+  },
+  "targets": {},
+  "etags": {}
+}

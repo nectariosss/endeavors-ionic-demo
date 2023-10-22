@@ -1,0 +1,40 @@
+<div>
+
+  <ion-card-header *ngIf="score.hasScore" class="p-3 pb-1 text-center">
+    <ion-card-title  class="endeavor-title-item">SCORE</ion-card-title>
+  </ion-card-header>
+
+  <ion-card
+  (click)=" isEditing?  onToggleScore() : null"
+  class="rounded-xl"
+    [ngClass]="{
+    'opacity-20': !score.hasScore,
+  }"
+  >
+    <ion-card-header *ngIf="!score.hasScore" class="p-3 text-center">
+      <ion-card-title class="endeavor-title-item">SCORE</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="score.hasScore">
+      <div class="flex justify-center items-center">
+        <ion-icon
+          (click)="decreaseUpvotes(); $event.stopPropagation()"
+          class="cursor-pointer px-5 py-2"
+          size="small"
+          name="caret-down-sharp"
+        ></ion-icon>
+
+        <ion-badge
+          class="text-lg bg-transparent "
+          >{{ score.upvotes }}</ion-badge
+        >
+        <ion-icon
+          class="cursor-pointer px-5 py-2"
+          size="small"
+          (click)="incrementUpvotes(); $event.stopPropagation()"
+          name="caret-up-sharp"
+        ></ion-icon>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

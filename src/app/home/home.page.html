@@ -1,0 +1,243 @@
+<ion-menu contentId="main-content">
+  <ion-header class="hidden">
+    <ion-toolbar>
+      <ion-title></ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div class="mt-6 mb-10">
+      <h1 class="py-3 font-bold text-center uppercase my-2">Endeavors</h1>
+      <ion-list>
+        <ion-item
+          [ngClass]="
+        {
+
+          'active-endeavor-item': endeavor.isActive === true,
+          'ambient-endeavor-item': endeavor.isAmbient === true
+        }
+        "
+          (click)="showEndeavor(endeavor.name)"
+          class="cursor-pointer"
+          *ngFor="let endeavor of allEndeavors; let i = index"
+        >
+          <h1 class="uppercase">{{endeavor.name}}</h1>
+
+          <ion-badge *ngIf="endeavor.score.hasScore" slot="end"
+            >{{endeavor.score?.upvotes}}</ion-badge
+          >
+        </ion-item>
+      </ion-list>
+
+      <h1 class="py-3 font-bold text-center uppercase my-2">Ambient</h1>
+      <ion-list>
+        <ion-item
+          [ngClass]="
+        {
+          'ambient-endeavor-item': endeavor.isAmbient === true
+        }
+        "
+          (click)="showEndeavor(endeavor.name)"
+          class="cursor-pointer"
+          *ngFor="let endeavor of ambientEndeavors; let i = index"
+        >
+          <h1 class="uppercase">{{endeavor.name}}</h1>
+
+          <ion-badge *ngIf="endeavor.score.hasScore" slot="end"
+            >{{endeavor.score?.upvotes}}</ion-badge
+          >
+        </ion-item>
+      </ion-list>
+
+      <h1 class="py-3 font-bold text-center uppercase my-2">Instant Aims</h1>
+      <ion-list>
+        <div *ngFor="let endeavor of allEndeavors; let i = index">
+          <ion-item
+            [ngClass]="
+          {
+            'active-endeavor-item': endeavor.isActive === true,
+            'ambient-endeavor-item': endeavor.isAmbient === true
+          }
+          "
+            (click)="showEndeavor(endeavor.name)"
+            class="cursor-pointer"
+            *ngIf="endeavor.instantAim"
+          >
+            <p class="">{{endeavor.instantAim}}</p>
+            <ion-badge *ngIf="endeavor.score.hasScore" slot="end"
+              >{{endeavor.score?.upvotes}}</ion-badge
+            >
+          </ion-item>
+        </div>
+      </ion-list>
+
+      <h1 class="py-3 font-bold text-center uppercase my-2">Long Aims</h1>
+      <ion-list>
+        <div *ngFor="let endeavor of allEndeavors; let i = index">
+          <ion-item
+            [ngClass]="
+          {
+            'active-endeavor-item': endeavor.isActive === true,
+            'ambient-endeavor-item': endeavor.isAmbient === true
+          }
+          "
+            (click)="showEndeavor(endeavor.name)"
+            class="cursor-pointer"
+            *ngIf="endeavor.longAim"
+          >
+            <p>{{endeavor.longAim}}</p>
+            <ion-badge *ngIf="endeavor.score.hasScore" slot="end"
+              >{{endeavor.score?.upvotes}}</ion-badge
+            >
+          </ion-item>
+        </div>
+      </ion-list>
+
+      <h1 class="py-3 font-bold text-center uppercase my-2">
+        Archived & Completed
+      </h1>
+      <ion-list>
+        <div *ngFor="let endeavor of archivedEndeavors; let i = index">
+          <ion-item
+            (click)="showEndeavor(endeavor.name)"
+            class="cursor-pointer"
+            *ngIf="endeavor.archived || endeavor.completed"
+          >
+            <div class="flex justify-between w-full">
+              <h1 class="uppercase text-blue-500">{{endeavor.name}}</h1>
+
+              <div class="flex flex-row mr-4">
+                <ion-icon
+                  *ngIf="endeavor.archived"
+                  name="archive-outline"
+                ></ion-icon>
+                <ion-icon
+                  class="ml-2"
+                  *ngIf="endeavor.completed"
+                  name="checkmark-done-outline"
+                ></ion-icon>
+              </div>
+            </div>
+          </ion-item>
+        </div>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-menu>
+
+<ion-header class="hidden">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-fab
+  *ngIf="!isEditing"
+  class="ml-2 mb-2"
+  vertical="bottom"
+  horizontal="start"
+  slot="fixed"
+>
+  <ion-fab-button (click)="toggleMenu()">
+    <ion-icon name="menu"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<div *ngIf="!isAllowedToView" class="flex flex-col justify-center">
+  <h1 class="text-3xl text-center mt-4">Prove you are nectarios</h1>
+  <ion-input
+    class="text-center"
+    [(ngModel)]="password"
+    placeholder="enter pass phrase"
+  ></ion-input>
+  <ion-button class="px-8" (click)="checkPassword()">Submit</ion-button>
+</div>
+
+<ion-content id="main-content" class="">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="!displayEndeavor && isAllowedToView" class="p-6">
+    <div *ngIf="!isDemo" class="flex flex-col justify-center mt-10">
+      <h1 class="text-3xl text-center mt-4">Welcome to Endeavors</h1>
+      <h2 class="text-xl text-center mt-4">
+        Select an Endeavor from the menu to get started
+      </h2>
+      <h2 class="text-center mt-4">or create a new Endeavor</h2>
+      <ion-button class="px-8 mt-6" (click)="addNewEndeavor()"
+        >Create Endeavor</ion-button
+      >
+    </div>
+
+    <div *ngIf="isDemo" class="flex flex-col justify-center mt-10">
+      <h1 class="text-3xl text-center mt-4">Welcome to Endeavors</h1>
+      <h2 class="text-xl text-center mt-4">
+        You are now vewing a demo of the Endeavors. You will not be able to
+        delete or create a new Endeavor, you can edit by changes won't be saved.
+        The Endeavors you see here are only for demonstrational purposes.
+      </h2>
+    </div>
+  </div>
+
+  <div *ngIf="isAllowedToView">
+    <endeavor-card
+      #endeavorCardRef
+      [isEditing]="isEditing"
+      *ngIf="displayEndeavor"
+      [newTitle]="displayEndeavor.name"
+      [endeavor]="displayEndeavor"
+      (endeavorSaved)="endeavorSavedHandler()"
+    ></endeavor-card>
+  </div>
+
+  <ion-fab
+    *ngIf="displayEndeavor"
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end"
+  >
+    <ion-fab-button class="mb-2 mr-2">
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="enterEditMode()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="!isDemo" (click)="addNewEndeavor()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="!isDemo" (click)="deleteEndeavor()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab
+    class="ml-2 mb-2"
+    *ngIf="isEditing"
+    slot="fixed"
+    vertical="bottom"
+    horizontal="start"
+  >
+    <ion-fab-button (click)="onSaveEndeavor()">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-toast
+    position="top"
+    #homeToast
+    trigger="open-toast"
+    message=""
+    [duration]="3000"
+  ></ion-toast>
+</ion-content>

@@ -1,0 +1,14 @@
+.endeavor-card {
+  max-width: 500px;
+  margin: auto;
+  border: none;
+  @apply
+  rounded-xl
+
+}
+
+ion-card-header {
+  @apply
+  pt-6
+  pb-0
+}
